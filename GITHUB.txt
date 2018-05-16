@@ -9,6 +9,11 @@ Excessive use of tabs? This extension respects your habit but helps with
 organizing scattered tabs.
 
 
+Website:
+
+-
+
+
 Topics:
 
 chrome-extension
@@ -29,6 +34,4 @@ sort-tabs
 productivity
 highlight-tabs
 split
-
-
 
