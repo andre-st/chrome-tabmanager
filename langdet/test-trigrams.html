@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script>	
+	//const title = 'Das ist ein Test in einer deutschen Sprache';
+	const title = 'This is a test in English language';
+	
+	// Trigram strings from MIT-licenced
+	// https://raw.githubusercontent.com/wooorm/franc/master/packages/franc-all/data.json
+	// 
+	// The idea is that given a selection of documents in known
+	// languages you can figure out the frequency of each
+	// three-character sequence for each language. Once you've
+	// got a frequency distribution for each language, and an
+	// idea of which trigrams regularly follow with other
+	// tri-grams, you can then assess the probability that a
+	// body of text in an unknown language is written in any
+	// specific language.
+	// 
+	// - grams based on the Universal Declaration of Human Rights (UDHR), 
+	//   the most translated document in the world
+	// - the top n-grams are almost always highly correlated to the language
+	//
+	const grams =  // grams[lang][gramIndex]='der'
+	{
+		'deu': 'en |er |der| un|nd |und|ein|ung|cht| de|ich|sch|ng | ge|ie |che|ech| di|die|rec|gen|ine|eit| re|ch | da|n d|ver|hen| zu|t d| au|ht | ha|lic|it |ten|rei| be|in | ve| in| ei|nde|auf|den|ede|zu |n s|uf |fre|ne |ter|es | je|jed|n u| an|sei|and| fr|run|at | se|e u|das|hei|s r|hte|hat|nsc|nge|r h|as |ens| al|ere|lle|t a| we|n g|rde|nte|ese|men| od|ode|ner|g d|all|t u|ers|te |nen| so|d d|n a|ben|lei| gr| vo|wer|e a|ege|ion| st|ige|le |cha| me|haf|aft|n j|ren| er|erk|ent|bei| si|eih|ihe|kei|erd|tig|n i|on |lun|r d|len|gem|ies|gru|tli|unt|chu|ern|ges|end|e s|ft |st |ist|tio|ati| gl|sta|gun|mit|sen|n n| na|n z|ite| wi|r g|eic|e e|ei |lie|r s|n w|gle|mei|de |uch|em |chl|nat|rch|t w|des|n e|hre|ale|spr|d f|ach|sse|r e| sc|urc|r m|nie|e f|fen|e g|e d| ni|dur|dar|int| du|geh|ied|t s| mi|alt|her|hab|f g|sic|ste|taa|aat|he |ang|ruc|hli|tz |eme|abe|h a|n v|nun|geg|arf|rf |ehe|pru| is|erf|e m|ans|ndl|e b|tun|n o|d g|n r|r v|wie|ber|r a|arb|bes|t i|h d|r w|r b| ih|d s|igk|gke|nsp|dig|ema|ell|eru|n f|ins|rbe|ffe|esc|igu|ger|str|ken|e v|gew|han|ind|rt | ar|ieß|n h|rn |man|r i|hut|utz|d a|ls |ebe|von|lte|r o|rli|etz|tra|aus|det|hul|e i|one|nne|isc|son|sel|et |ohn|t g|sam| fa|rst|rkl|ser|iem|g v|t z|err'.split( '|' ),
+		'eng': ' th|the| an|he |nd |and|ion| of|of |tio| to|to |on | in|al |ati|igh|ght|rig| ri|or |ent|as |ed |is |ll |in | be|e r|ne |one|ver|all|s t|eve|t t| fr|s a| ha| re|ty |ery| or|d t| pr|ht | co| ev|e h|e a|ng |ts |his|ing|be |yon| sh|ce |ree|fre|ryo|n t|her|men|nat|sha|pro|nal|y a|has|es |for| hi|hal|f t|n a|n o|nt | pe|s o| fo|d i|nce|er |ons|res|e s|ect|ity|ly |l b|ry |e e|ers|e i|an |e o| de|cti|dom|edo|eed|hts|ter|ona|re | no| wh| a | un|d f| as|ny |l a|e p|ere| en| na| wi|nit|nte|d a|any|ted| di|ns |sta|th |per|ith|e t|st |e c|y t|om |soc| ar|ch |t o|d o|nti|s e|equ|ve |oci|man| fu|ote|oth|ess| al| ac|wit|ial| ma|uni| se|rea| so| on|lit|int|r t|y o|enc|thi|ual|t a| eq|tat|qua|ive| st|ali|e w|l o|are|f h|con|te |led| is|und|cia|e f|le | la|y i|uma|by | by|hum|f a|ic | hu|ave|ge |r a| wo|o a|ms |com| me|eas|s d|tec| li|n e|en |rat|tit|ple|whe|ate|o t|s r|t f|rot| ch|cie|dis|age|ary|o o|anc|eli|no | fa| su|son|inc|at |nda|hou|wor|t i|nde|rom|oms| ot|g t|eme|tle|iti|gni|s w|itl|duc|d w|whi|act|hic|aw |law| he|ich|min|imi|ort|o s|se |e b|ntr|tra|edu|oun|tan|e d|nst|l p|d n|ld |nta|s i|ble|n p| pu|n s| at|ily|rth|tho|ful|ssi|der|o e|cat|uca|unt|ien| ed|o p|h a|era|ind|pen|sec|n w|omm|r s'.split( '|' ),
+	};
+	
+	// "dasdas ist..."  ->  ["das", "das", " is", ...]  ->  {"das":2, " is":1, ...}
+	const titGrams      = title.toLowerCase().match( /[a-z ]{3}/g );
+	var   titGramCounts = {};
+	titGrams.forEach( g => titGramCounts[g] = (titGramCounts[g] += 1) || 1 );
+	
+	var w    = {};  // w[lang][gram]=200; weight or position of a gram in grams, the higher the less important
+	var d    = {};  // d[lang]      =150; distances between title grams and UDHR grams
+	var minL = 'deu';
+	for( l in grams )
+	{
+		w[l] = {};
+		for( var i = 0; i < grams[l].length; i++ )
+			w[l][ grams[l][i] ] = i;
+		
+		d[l] = 0;
+		for( g in titGramCounts )
+			d[l] += (( Math.abs( titGramCounts[g] - w[l][g] - 1) ) || 300 );
+						// e.g.: |1-2|=1, |5-300|=295
+						// If title gram not in lang add 300; <300 are important
+		
+		minL = d[l] < d[minL] ? l : minL;
+	}
+	
+	console.log( minL );
+</script>
+</body>
+</html>

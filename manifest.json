@@ -1,0 +1,59 @@
+{
+	"manifest_version": 2,
+	
+ 	"name"        : "__MSG_extName__",
+	"short_name"  : "BazTabMan",
+	"version"     : "1.2.0",
+	"version_name": "Release 2018-02-20",
+	"description" : "__MSG_extDescription__",
+	"author"      : "andre-st",
+	"homepage_url": "https://github.com/andre-st/chromium/blob/master/tabmanager/README.md",
+	
+	"default_locale"        : "en",
+	"offline_enabled"       : true,
+	"permissions"           : ["tabs","chrome://favicon/*","contextMenus"],
+	"minimum_chrome_version": "24",
+	
+	"icons":
+	{
+		"16" : "image/icon16.png",
+		"48" : "image/icon48.png",
+		"128": "image/icon128.png"
+	},
+	
+	"background":
+	{
+		"scripts"   : ["background.js"],
+		"persistent": true
+	},
+	
+	"browser_action": 
+	{
+		"default_icon" : "image/icon16.png",
+		"default_popup": "popup.html"
+	},
+	
+	"commands":
+	{
+		"mergeNext":
+		{
+			"description": "__MSG_keybMergeNext__"
+		},
+		"splitAtTab":
+		{
+			"description": "__MSG_keybSplitAtTab__"
+		},
+		"suspendTabs":
+		{
+			"description": "__MSG_keybSuspendTabs__"
+		},
+		"suspendTab":
+		{
+			"description": "__MSG_keybSuspendTab__"
+		},
+		"moveTabToBetterWin":
+		{
+			"description": "__MSG_keybMoveTabToBetterWin__"
+		}
+	}
+}

@@ -1,0 +1,92 @@
+{
+  "extName": {
+    "message": "Bazillion Tabs Manager"
+  },
+  "extDescription": {
+    "message": "Excessive use of tabs? This extension respects your habit but helps with organizing scattered tabs."
+  },
+  "btnSplitAtTab": {
+    "message": "Split at tab",
+    "description": "button caption"
+  },
+  "btnSplitHighlighted": {
+    "message": "Split hilighted",
+    "description": "alternative button caption"
+  },
+  "btnSplitAtCenter": {
+    "message": "Split midways",
+    "description": "button caption"
+  },
+  "btnSort": {
+    "message": "Sort tabs",
+    "description": "button caption"
+  },
+  "btnSuspend": {
+    "message": "Suspend window",
+    "description": "button caption"
+  },
+  "btnSuspendHover": {
+    "message": "Suspend all tabs of\nthe current window",
+    "description": "button tooltip"
+  },
+  "btnMoveTabsToBetterWins": {
+    "message": "To better windows",
+    "description": "button caption"
+  },
+  "btnMoveTabsToBetterWinsHover": {
+    "message": "Move tabs to windows already\ncrowded with similar tabs",
+    "description": "button tooltip"
+  },
+  "btnMergeNext": {
+    "message": "Merge with...",
+    "description": "button caption"
+  },
+  "btnMergeNextAwait": {
+    "message": "Merge me",
+    "description": "button caption"
+  },
+  "btnMergeCancel": {
+    "message": "End merge",
+    "description": "button caption"
+  },
+  "btnMergeCancelHover": {
+    "message": "Now, switch to the window of interest,\nopen its Bazillion Tabs Manager and\npress the green button there!",
+    "description": "button tooltip"
+  },
+  "editSearchHover": {
+    "message": "Press ENTER to see search results",
+    "description": "textbox tooltip"
+  },
+  "editSearchPlaceholder": {
+    "message": "Search",
+    "description": "textbox placeholder"
+  },
+  "menuSuspendTab": {
+    "message": "Suspend Tab",
+    "description": "Page context menu item"
+  },
+  "menuMoveTabToBetterWin": {
+    "message": "Move tab to better window + suspend tab",
+    "description": "Page context menu item"
+  },
+  "keybMergeNext": {
+    "message": "Merge window",
+    "description": "Keyboard shortcut description"
+  },
+  "keybSplitAtTab": {
+    "message": "Split window at tab",
+    "description": "Keyboard shortcut description"
+  },
+  "keybSuspendTabs": {
+    "message": "Suspend window",
+    "description": "Keyboard shortcut description"
+  },
+  "keybSuspendTab": {
+    "message": "Suspend active tab",
+    "description": "Keyboard shortcut description"
+  },
+  "keybMoveTabToBetterWin": {
+    "message": "Move active tab to a better window + suspend tab",
+    "description": "Keyboard shortcut description"
+  }
+}

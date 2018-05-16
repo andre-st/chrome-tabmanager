@@ -1,0 +1,34 @@
+Repository Name:
+
+chrome-tabmanager
+
+
+Description:
+
+Excessive use of tabs? This extension respects your habit but helps with
+organizing scattered tabs.
+
+
+Topics:
+
+chrome-extension
+chromium-extension
+chrome
+chromium
+tabs-management
+tab-management
+tab-plugin
+chrome-plugin
+extension
+extensions
+tab-switcher
+tab-search
+google-chrome
+suspended-tabs
+sort-tabs
+productivity
+highlight-tabs
+split
+
+
+

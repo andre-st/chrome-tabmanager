@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+	<head>
+		<title data-i18n="extName"></title>
+		
+		<link rel="stylesheet" href="popup.css">
+		
+		<!--
+		- JavaScript and HTML must be in separate files: see our Content Security
+		- Policy documentation[1] for details and explanation.
+		-
+		- [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
+		-->
+		<script src="popup.js"></script>
+	</head>
+	
+	<body class="popupDefaultState"> <!-- other: popupSearchState -->
+		
+		<fieldset id="singleWinControls">
+			
+			<div id="splitControls" class="default">
+				
+				<button id="btnSplitAtTab" data-i18n="btnSplitAtTab"></button>
+				
+				<button id="btnSplitHighlighted" data-i18n="btnSplitHighlighted"></button>
+				
+				<button id="btnSplitAtCenter" data-i18n="btnSplitAtCenter"></button>
+			</div>
+			
+			
+			<button id="btnMoveTabsToBetterWins" 
+					data-i18n-title="btnMoveTabsToBetterWinsHover"
+					data-i18n="btnMoveTabsToBetterWins"></button>
+			
+			
+			<div id="mergeControls" class="default">
+			
+				<button id="btnMergeNext"></button>
+				
+				<button id="btnMergeCancel" data-i18n-title="btnMergeCancelHover">
+					<span data-i18n="btnMergeCancel"></span>
+				</button>
+			</div>
+			
+			
+			<button id="btnSort" data-i18n="btnSort"></button>
+			
+			
+			<div id="suspendControls">
+				
+				<button id="btnSuspend" 
+						data-i18n-title="btnSuspendHover"
+						data-i18n="btnSuspend"></button>
+			</div>
+			
+		</fieldset>
+		
+		
+		<fieldset id="multiWinControls">
+			
+			<div id="searchPreview">
+				<ul id="searchMatchList">
+				</ul>
+			</div>		
+			
+			<input id="editSearch" type="text" 
+					data-i18n-placeholder="editSearchPlaceholder" 
+					data-i18n-title="editSearchHover">		
+		</fieldset>
+		
+		
+		<div id="stats"></div>
+	</body>
+</html>
+

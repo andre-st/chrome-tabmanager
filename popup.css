@@ -1,0 +1,283 @@
+body 
+{
+	font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+	font-size: 100%;
+}
+
+body.popupDefaultState
+{
+	width: 150px;
+}
+
+
+fieldset
+{
+	margin: 0 0 0.75em 0;
+	padding: 0;
+	border: 0 none;
+}
+
+fieldset + fieldset
+{
+	border-top: 1px solid #d0d0d0;
+	padding-top: 0.75em;
+	margin-top: 0.75em;
+}
+
+input[type="text"]
+{
+	width: 100%;
+	font-size: 13px;
+	padding: 5px;
+	box-sizing: border-box;
+	margin: 0em 0 0em 0;
+}
+
+button
+{
+	width: 100%;
+	height: 30px;
+	font-size: 13px;
+	position: relative;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	text-align: left;
+	text-indent: 25px;
+	box-sizing: border-box;
+}
+
+button + button,
+button + div,
+div    + button
+{
+	margin: 10px 0 0 0;
+}
+
+
+
+/* ---------------------- Tab and window counter section ------------------- */
+
+#stats
+{
+	margin: 1em 0 0 0;
+	font-size: 13px;
+	color: #aaa;
+	white-space: nowrap;
+	text-align: center;
+	text-overflow: ellipsis;
+}
+
+#stats.highlighted
+{
+	color: #000000;
+}
+
+
+
+/* ------------------------ Split Session Controls ------------------------- */
+
+#btnSplitHighlighted
+{
+	background-color: #FFFF88;
+}
+
+#splitControls #btnSplitAtTab,
+#splitControls #btnSplitHighlighted
+{
+	display: none;
+}
+
+#splitControls.default     #btnSplitAtTab,
+#splitControls.highlighted #btnSplitHighlighted
+{
+	display: block;
+}
+
+
+
+/* ------------------------ Merge Session Controls ------------------------- */
+
+#mergeControls button
+{
+	margin: 0;
+}
+
+#mergeControls #btnMergeCancel
+{
+	background-color: #ffd3d3;
+	color: #000;
+}
+
+
+/* Button layout in default merge-session state: */
+
+#mergeControls.default #btnMergeNext
+{
+	display: block;
+	width: 100%;
+}
+
+#mergeControls.default #btnMergeCancel
+{
+	display: none;
+}
+
+
+/* Button layout in merge-session state 'awaiting': */
+
+#mergeControls.awaiting #btnMergeNext
+{
+	display: block;
+	background-color: #a2efaa;
+	color: #000;
+	width: 85%;
+	float: left;
+}
+
+#mergeControls.awaiting #btnMergeCancel
+{
+	display: block;
+	width: 15%;
+	float: left;
+}
+
+#mergeControls.awaiting #btnMergeCancel:before
+{
+	font-size: 13px; 
+	left: 4px;
+}
+
+#mergeControls.awaiting #btnMergeCancel span
+{
+	display: none;
+}
+
+
+/* Button layout in merge-session state 'cancelable': */
+
+#mergeControls.cancelable #btnMergeNext
+{
+	display: none;
+}
+
+#mergeControls.cancelable #btnMergeCancel
+{
+	display: block;
+	float: left;
+}
+
+#mergeControls.cancelable #btnMergeCancel span
+{
+	display: inline;
+}
+
+
+
+
+#mergeControls.awaiting   #btnMergeNext   span,
+#mergeControls.cancelable #btnMergeCancel span
+{	
+	animation: blinker 1.5s ease infinite;
+}
+
+@keyframes blinker
+{
+	50% { opacity: 0.2; }
+}
+
+
+
+/* ----------------------------- Button Icons ------------------------------ */
+
+#btnSplitAtTab:before          { content: "\2702"; color: #aa0000; }  /* 8<  */
+#btnSplitHighlighted:before    { content: "\2702"; color: #aa0000; }  /* 8<  */
+#btnSplitAtCenter:before       { content: "\2702"; color: #aa0000; }  /* 8<  */
+#btnSort:before                { content: "\21c4"; color: #0000aa; }  /* <-> */
+#btnMoveTabsToBetterWins:before{ content: "\2928"; color: #000000; }  /* 27b2 (->), 2933 ~>, 2971 =>, 3d =, zauberstab (magic wand)?, 2748 sparkle, 219d ~^, 2708 >|- */
+#btnMergeNext:before           { content: "\262F"; color: #008000; }  /* (), 222a U */
+#btnMergeCancel:before         { content: "\2715"; color: #000000; }  /* x,  2716 X */
+#btnMergeNext.cancelable:before{                   color: #bf9393; }  
+#btnSuspend:before             { content: "\25FE"; color: #444444; }
+
+button:before
+{
+	text-indent: 0;
+	font-size: 20px;
+	line-height: 30px;  /* = Button height = vcenter */
+	height: 30px;
+	position: absolute;
+	left: 7px;
+	top: -2px;
+	display: inline-block;
+	z-index: 1;
+}
+
+button:disabled:before
+{
+	color: #bbb !important;
+}
+
+
+
+/* ----------------------------- Search Mode ------------------------------- */
+
+body.popupSearchState
+{
+	width: 450px;
+}
+
+body.popupDefaultState #searchPreview
+{
+	display: none;
+}
+
+body.popupSearchState #searchPreview
+{
+	display: block;
+	z-index: 10;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 250px;
+	background-color: #ffe;
+	overflow-y: scroll;
+	word-break: break-all;
+}
+
+body.popupSearchState #searchMatchList
+{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	font-size: 9pt;
+}
+
+body.popupSearchState #searchMatchList li
+{
+	padding: 4px 0 6px 0;
+	cursor: pointer;
+	text-indent: -2em;  /* FavIcon */
+	padding-left: 3em;
+	line-height: 1.45em;
+}
+
+body.popupSearchState #searchMatchList li img
+{
+	position: relative;
+	top: +3px;
+	margin-right: 5px;
+	width: 16px;
+	height: 16px;
+}
+
+body.popupSearchState #searchMatchList li + li
+{
+	border-top: 1px solid #ddb;
+}
+
+body.popupSearchState #searchMatchList li:hover
+{
+	background-color: #ddeeff;
+}
+
