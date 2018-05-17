@@ -74,7 +74,7 @@ This aims at users who let bazillion tabs and windows pile up when browsing the 
 
 ### Feedback:
 
-Use GitHub or see [AUTHORS.md](AUTHORS.md) file
+Use [GitHub](https://github.com/andre-st/chrome-tabmanager/issues) or see [AUTHORS.md](AUTHORS.md) file
 
 
 
