@@ -1,5 +1,6 @@
 # Bazillion Tabs Manager for Google Chrome
 
+[![Semver](http://img.shields.io/SemVer/2.0.0.png)](http://semver.org/spec/v1.2.0.html)
 ![Maintenance](https://img.shields.io/maintenance/yes/2018.svg)
 
 
