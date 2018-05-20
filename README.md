@@ -1,5 +1,8 @@
 # Bazillion Tabs Manager for Google Chrome
 
+![Maintenance](https://img.shields.io/maintenance/yes/2018.svg)
+
+
 Chrome extension to sort, split and merge, search, count and suspend tabs in your browser.
 This aims at users who let bazillion tabs and windows pile up when browsing the web.
 
