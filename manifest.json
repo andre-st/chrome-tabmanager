@@ -7,7 +7,7 @@
 	"version_name": "Release 2018-02-20",
 	"description" : "__MSG_extDescription__",
 	"author"      : "andre-st",
-	"homepage_url": "https://github.com/andre-st/chromium/blob/master/tabmanager/README.md",
+	"homepage_url": "https://github.com/andre-st/chrome-tabmanager/blob/master/README.md",
 	
 	"default_locale"        : "en",
 	"offline_enabled"       : true,
