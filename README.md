@@ -9,7 +9,7 @@ This aims at users who let bazillion tabs and windows pile up when browsing the 
 
 ## Program Features and Screenshots
 
-- zero configuration (keyboard shortcuts are optional)
+- zero configuration
 - automatically move tabs to windows with a higher amount of similar tabs, e.g., 
   the 2 YouTube tabs in the current window to a window with 15 YouTube videos; 
   works for all window tabs at once (![Alt text](image/icon16.png?raw=true "Browser Action Icon"))
