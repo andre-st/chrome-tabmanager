@@ -71,7 +71,7 @@ This aims at users who let bazillion tabs and windows pile up when browsing the 
 
 ### Developers:
 
-1. clone Git repository
+1. clone Git repository or [save as Zip-file](https://github.com/andre-st/chrome-tabmanager/archive/master.zip)
 2. Chrome > Settings > Extensions > [x] Developer mode (upper right corner)
 3. Chrome > Settings > Extensions > click <kbd>Load unpacked extension</kbd> 
 4. browse to the source directory of the downloaded, unarchived release and confirm
