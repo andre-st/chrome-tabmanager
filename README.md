@@ -82,12 +82,6 @@ Use [GitHub](https://github.com/andre-st/chrome-tabmanager/issues) or see [AUTHO
 
 
 
-## License
-
-Creative Commons BY-SA
-
-
-
 ## See also
 
 - [Why You Open Too Many Browser Tabs And How To Stop It](http://blog.trello.com/too-many-browser-tabs)
