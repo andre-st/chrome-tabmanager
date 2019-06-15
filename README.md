@@ -87,4 +87,5 @@ Use [GitHub](https://github.com/andre-st/chrome-tabmanager/issues) or see [AUTHO
 - [Why You Open Too Many Browser Tabs And How To Stop It](http://blog.trello.com/too-many-browser-tabs)
 - [On the cognitive value of having a bazillion tabs open on your browser](http://clivethompson.net/2016/09/27/on-the-cognitive-value-of-having-a-bazillion-tabs-open-on-your-browser/)
 - [Joe Average < 11 tabs](http://www.slate.com/articles/life/the_hive/2010/12/open_this_story_in_a_new_tab.html)
-
+- [OneTab Chrome Extensions](https://chrome.google.com/webstore/detail/onetab/chphlpgkkbolifaimnlloiipkdnihall)
+- [Snooze Tabs Firefox Addon](https://addons.mozilla.org/en-US/firefox/addon/snoozetabs/)
