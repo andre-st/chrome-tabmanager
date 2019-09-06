@@ -89,3 +89,5 @@ Use [GitHub](https://github.com/andre-st/chrome-tabmanager/issues) or see [AUTHO
 - [Joe Average < 11 tabs](http://www.slate.com/articles/life/the_hive/2010/12/open_this_story_in_a_new_tab.html)
 - [OneTab Chrome Extensions](https://chrome.google.com/webstore/detail/onetab/chphlpgkkbolifaimnlloiipkdnihall)
 - [Snooze Tabs Firefox Addon](https://addons.mozilla.org/en-US/firefox/addon/snoozetabs/)
+- [Detach Tabs Firefox Addpn](https://addons.mozilla.org/en-US/firefox/addon/detach-tabs/)
+
