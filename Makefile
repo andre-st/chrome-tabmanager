@@ -37,7 +37,6 @@ docs:
 ## make icons        :  Creates icons in different sizes based on the largest one
 .PHONY: icons
 icons:
-	convert ./image/icon128.png -resize 96x96 ./image/icon96.png
 	convert ./image/icon128.png -resize 48x48 ./image/icon48.png
 	convert ./image/icon128.png -resize 16x16 ./image/icon16.png
 
