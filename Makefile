@@ -11,11 +11,15 @@ MAKEFLAGS += --no-builtin-rules
 
 
 # Configure Make rules:
-PROJECT_VERSION   = 1.3.0
-PACKAGE           = chrome-tabmanager
-RELEASE           = $(PACKAGE)-$(PROJECT_VERSION)
-GITDIR            = $(wildcard .git)
-BUILD_DIR         = _build
+BUILD_DIR            = _build
+BUILD_DATE           = $(shell date +'%Y-%m-%d')
+GITDIR               = $(wildcard .git)
+PROJECT_VERSION      = 1.3.0
+PROJECT_VERSION_NAME = Release ${PROJECT_VERSION} (${BUILD_DATE})
+PACKAGE              = chrome-tabmanager
+RELEASE              = $(PACKAGE)-$(PROJECT_VERSION)
+
+
 
 
 # ----------------------------------------------------------------------------
@@ -29,8 +33,9 @@ all: release
 .PHONY: docs
 docs:
 	# vX.X, vX.XX.X, image:X.XX.X
-	sed -i -E "s/([v:])[0-9\.]+/\1${PROJECT_VERSION}/"           README.md
-	sed -i -E 's/("version":\s*")[0-9\.]+/\1${PROJECT_VERSION}/' manifest.json
+	sed -i -E "s/([v:])[0-9\.]+/\1${PROJECT_VERSION}/"                     README.md
+	sed -i -E 's/("version"\s*:\s*")[^"]+/\1${PROJECT_VERSION}/'           manifest.json
+	sed -i -E 's/("version_name"\s*:\s*")[^"]+/\1${PROJECT_VERSION_NAME}/' manifest.json
 
 
 # ----------------------------------------------------------------------------
