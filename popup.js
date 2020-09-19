@@ -160,3 +160,11 @@ document.addEventListener( 'DOMContentLoaded', function()
 });
 
 
+chrome.runtime.getBackgroundPage( bgWindow =>
+{
+	//`Extension context invalidated` error is thrown if `window.closed` is true and call to
+	//`window.chrome.i18n` or other `window.chrome` api happens. Use bgWindow.chrome instead.
+	// Use winChrome for tab-related calls like winChrome.tabs.getCurrent.
+	window.winChrome = window.chrome;
+	window.chrome    = bgWindow.chrome;
+});
