@@ -15,7 +15,7 @@ BUILD_DIR            = _build
 BUILD_DATE           = $(shell date +'%Y-%m-%d')
 GITDIR               = $(wildcard .git)
 PROJECT_VERSION      = 1.3.0
-PROJECT_VERSION_NAME = Release ${PROJECT_VERSION} (${BUILD_DATE})
+PROJECT_VERSION_NAME = ${PROJECT_VERSION} (${BUILD_DATE})
 PACKAGE              = chrome-tabmanager
 RELEASE              = $(PACKAGE)-$(PROJECT_VERSION)
 
