@@ -15,6 +15,8 @@
  *   - doc-comments conventions: http://usejsdoc.org/
  *   - members prefixed with an underscore are private members (_function, _attribute)
  *   - consider `urlparts( tab.url )` over `tab.url`, it's transparent to suspended URLs
+ *   - windows.getCurrent() isn't the focused one, and windows.getLastFocused() is buggy in a chrome version,
+ *     so I used tabs.query({ lastFocusedWindow: true } all the time
  * 
  * Overview:
  *   1.     Tab Manager Functions
@@ -106,7 +108,7 @@ const nsTabMan =
 			// Index 0 whole string, 1+ capture group
 			// parseInt() fails commas, Goodreads is always US locale:
 			// 
- 			const max1 = max ? parseInt( max[1].replace( ",", "" ) ) : 1000000;
+			const max1 = max ? parseInt( max[1].replace( ",", "" ) ) : 1000000;
 			const mbx1 = mbx ? parseInt( mbx[1].replace( ",", "" ) ) : 1000000;
 			const mao2 = mao ? parseInt( mao[2].replace( ",", "" ) ) : max1;
 			const mbo2 = mbo ? parseInt( mbo[2].replace( ",", "" ) ) : mbx1;
@@ -114,7 +116,7 @@ const nsTabMan =
 			return mao2 - mbo2;
 		}
 		
-		chrome.tabs.query({ currentWindow: true }, function( tabs )
+		chrome.tabs.query({ lastFocusedWindow: true }, function( tabs )
 		{
 			tabs.sort( soFn );
 			chrome.tabs.move( tabs.map( t => t.id ), { index: -1 });
@@ -129,21 +131,31 @@ const nsTabMan =
 	
 	
 	/**
-	 * Splits the given window at the given tab index
-	 * @param  {Window} theWin - 'populated' Chrome Window object
-	 * @param  {number} theTabIndex
+	 * Splits the given window at the given tab indices
+	 * @param  {number}                theWinId
+	 * @param  {number} or {number[]}  theTabIndexOrIndices;
+	 *                   if not array, all tabs right of given tab are selected too;
+	 *                   otherwise only indexed tabs are split and joined together
 	 * @return {void}
 	 * @private
 	 */
-	_splitAtIndex: function( theWin, theTabIndex )
+	_splitAtIndex: function( theWinId, theTabIndexOrIndices )
 	{
-		chrome.windows.create({ tabId: theWin.tabs[theTabIndex].id }, function( newWin )
+		const tabIndices = Array.isArray( theTabIndexOrIndices )
+			?   theTabIndexOrIndices
+			: [ theTabIndexOrIndices ];
+		
+		const tabFilter = Array.isArray( theTabIndexOrIndices )
+			? t => tabIndices.includes( t.index )
+			: t => t.index >= tabIndices[0];
+		
+		chrome.tabs.getAllInWindow( theWinid, function( tabs )
 		{
-			const tabsToMove = theWin.tabs
-					.filter( t => t.index >= theTabIndex )
-					.map   ( t => t.id );
+			const firstTabId = tabs[tabIndices[0]].id;
+			const tabsToMove = tabs.filter( tabFilter ).map( t => t.id );
 			
-			chrome.tabs.move( tabsToMove, { windowId: newWin.id, index: -1 } );
+			chrome.windows.create({ tabId: firstTabId },
+				newWin => chrome.tabs.move( tabsToMove, { windowId: newWin.id, index: -1 }));
 		});
 	},
 	
@@ -155,8 +167,8 @@ const nsTabMan =
 	 */
 	splitAtTab: function()
 	{
-		chrome.windows.getCurrent({ populate: true }, 
-				w => nsTabMan._splitAtIndex( w, w.tabs.find( t => t.active ).index ) );
+		chrome.tabs.query({ lastFocusedWindow: true, active: true },
+			tabs => nsTabMan._splitAtIndex( tabs[0].windowId, tabs[0].index ));
 	},
 	
 	
@@ -167,8 +179,8 @@ const nsTabMan =
 	 */
 	splitAtCenter: function()
 	{
-		chrome.windows.getCurrent({ populate: true },
-				w => nsTabMan._splitAtIndex( w, Math.round( w.tabs.length / 2 ) ) );
+		chrome.tabs.query({ lastFocusedWindow: true },
+			tabs => nsTabMan._splitAtIndex( tabs[0].windowId, Math.round( tabs.length / 2 )));
 	},
 	
 	
@@ -179,18 +191,13 @@ const nsTabMan =
 	 */
 	splitHighlighted: function()
 	{
-		chrome.tabs.query({ currentWindow: true, highlighted: true }, function( hiTabs )
-		{
-			chrome.windows.create({ tabId: hiTabs[0].id }, function( newWin )
-			{
-				const tids = hiTabs.map( t => t.id );
-				chrome.tabs.move( tids, { windowId: newWin.id, index: -1 });
-				nsTabMan._notifySplitSessionListeners( 'default ');
-			});
-		});
+		chrome.tabs.query({ lastFocusedWindow: true, highlighted: true }, function( tabs )
+			tabs => nsTabMan._splitAtIndex( tabs[0].windowId, tabs.map( t => t.index ));
+		
+		nsTabMan._notifySplitSessionListeners( 'default');
 	},
 	
-
+	
 	/**
 	 * @param  {string} [theState] - Name of the current split situation
 	 * @return {void}
@@ -198,7 +205,7 @@ const nsTabMan =
 	 */
 	_notifySplitSessionListeners: function( theState )
 	{
-		chrome.tabs.query({ currentWindow: true }, function( tabs )
+		chrome.tabs.query({ lastFocusedWindow: true }, function( tabs )
 		{
 			// The active tabs is a highlighted tab too, therefore > 1
 			const hasHiTabs = tabs.filter( t => t.highlighted ).length > 1;
@@ -206,7 +213,7 @@ const nsTabMan =
 			nsTabMan._splitSessionListeners.forEach( l => l( theState ) );
 		});
 	},
-
+	
 	
 	/**
 	 * @param  {splitSessionCallback} theCallback
@@ -229,14 +236,16 @@ const nsTabMan =
 	
 	/**
 	 * Conflates the given windows with their tabs into a single window.
-	 * @param  {Window[]} theWins - Array with 'populated' Chrome Window objects
+	 * @param  {number[]} theWinsIds - Array with window Ids
 	 * @return {void}
 	 * @private
 	 */
-	_merge: function( theWins )
+	_merge: function( theWinIds )
 	{
-		const mvopt = { windowId: theWins[0].id, index: -1 };
-		theWins.forEach( w => chrome.tabs.move( w.tabs.map( t => t.id ), mvopt ) );
+		const mvopt = { windowId: theWinIds[0], index: -1 };
+		theWinsIds.forEach(
+			wid => chrome.tabs.query({ windowId: wid },
+				tabs => chrome.tabs.move( tabs.map( t => t.id ), mvopt )));
 	},
 	
 	
@@ -247,11 +256,11 @@ const nsTabMan =
 	 */	
 	_notifyMergeSessionListeners: function( theState )
 	{
-		chrome.windows.getCurrent({ populate: false }, function( win )
+		chrome.tabs.query({ lastFocusedWindow: true }, function( tabs )
 		{
 			theState = theState || (
-				nsTabMan._winIdToMerge === undefined ? 'default' : (
-				nsTabMan._winIdToMerge ==  win.id    ? 'cancelable' : 'awaiting' ) );
+				nsTabMan._winIdToMerge === undefined        ? 'default' : (
+				nsTabMan._winIdToMerge ==  tabs[0].windowId ? 'cancelable' : 'awaiting' ) );
 			
 			nsTabMan._mergeSessionListeners.forEach( l => l( theState ) );
 		});
@@ -284,9 +293,11 @@ const nsTabMan =
 	 */
 	mergeNext: function()
 	{
-		chrome.windows.getCurrent({ populate: true }, function( activeWin )
+		chrome.tabs.query({ lastFocusedWindow: true }, function( tabs )
 		{
-			if( nsTabMan._winIdToMerge == activeWin.id )  // e.g., pressing merge-key 2x
+			const activeWinId = tabs[0].windowId;
+			
+			if( nsTabMan._winIdToMerge == activeWinId )  // e.g., pressing merge-key 2x
 			{
 				nsTabMan.cancelMerge();
 				return;
@@ -294,17 +305,14 @@ const nsTabMan =
 			
 			if( nsTabMan._winIdToMerge === undefined )
 			{
-				nsTabMan._winIdToMerge = activeWin.id;
+				nsTabMan._winIdToMerge = activeWinId;
 				nsTabMan._notifyMergeSessionListeners( 'cancelable' );
 				return;
 			}
 			
-			chrome.windows.get( nsTabMan._winIdToMerge, { populate: true }, function( winToMerge )
-			{
-				nsTabMan._merge([ activeWin, winToMerge ]);
-				nsTabMan._winIdToMerge = activeWin.id;  // Next to merge
-				nsTabMan._notifyMergeSessionListeners( 'cancelable' );
-			});
+			nsTabMan._merge([ activeWinId, nsTabMan._winIdToMerge ]);
+			nsTabMan._winIdToMerge = activeWinId;  // Next to merge
+			nsTabMan._notifyMergeSessionListeners( 'cancelable' );
 		});
 	},
 	
@@ -369,7 +377,7 @@ const nsTabMan =
 		}
 		else
 		{
-			chrome.tabs.query({ currentWindow: true }, 
+			chrome.tabs.query({ lastFocusedWindow: true }, 
 					tabs => nsTabMan.moveTabsToBetterWins( tabs ) );
 		}
 	},
@@ -500,7 +508,7 @@ const nsTabMan =
 	 */
 	suspendTabs: function()
 	{
-		chrome.tabs.query({ currentWindow: true }, 
+		chrome.tabs.query({ lastFocusedWindow: true }, 
 				tabs => tabs.filter ( t => !t.audible )
 				            .forEach( t => nsTabMan.suspendTab( t ) ) );
 	},
@@ -769,12 +777,12 @@ chrome.commands.onCommand.addListener( function( theCommand )
 			break;
 			
 		case "suspendTab":             // Alt+H
-			chrome.tabs.query({ currentWindow: true },
+			chrome.tabs.query({ lastFocusedWindow: true },
 					tabs => nsTabMan.suspendTab( tabs.find( t => t.active ) ) );
 			break;
 			
 		case "moveTabToBetterWin":     // Alt+W
-			chrome.tabs.query({ currentWindow: true }, function( tabs )
+			chrome.tabs.query({ lastFocusedWindow: true }, function( tabs )
 			{
 				const t = tabs.find( t => t.active );
 				nsTabMan.moveTabsToBetterWins([ t ]);
