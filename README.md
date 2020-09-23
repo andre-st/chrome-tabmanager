@@ -1,10 +1,11 @@
-# Bazillion Tabs Manager for Google Chrome
+# Bazillion Tabs Manager for Google Chrome, v1.3.0
 
 ![Maintenance](https://img.shields.io/maintenance/yes/2018.svg)
 
 
 Chrome extension to sort, split and merge, search, count and suspend tabs in your browser.
 This aims at users who let bazillion tabs and windows pile up when browsing the web.
+[What's new?](CHANGELOG.md)
 
 
 ## Program Features and Screenshots
@@ -89,5 +90,5 @@ Use [GitHub](https://github.com/andre-st/chrome-tabmanager/issues) or see [AUTHO
 - [Joe Average < 11 tabs](http://www.slate.com/articles/life/the_hive/2010/12/open_this_story_in_a_new_tab.html)
 - [OneTab Chrome Extensions](https://chrome.google.com/webstore/detail/onetab/chphlpgkkbolifaimnlloiipkdnihall)
 - [Snooze Tabs Firefox Addon](https://addons.mozilla.org/en-US/firefox/addon/snoozetabs/)
-- [Detach Tabs Firefox Addpn](https://addons.mozilla.org/en-US/firefox/addon/detach-tabs/)
+- [Detach Tabs Firefox Addon](https://addons.mozilla.org/en-US/firefox/addon/detach-tabs/)
 
