@@ -1,6 +1,6 @@
-# Bazillion Tabs Manager for Google Chrome, v1.3.0
+# Bazillion Tabs Manager for Google Chrome, v1.2.5
 
-![Maintenance](https://img.shields.io/maintenance/yes/2018.svg)
+![Maintenance](https://img.shields.io/maintenance/yes/2020.svg)
 
 
 Chrome extension to sort, split and merge, search, count and suspend tabs in your browser.

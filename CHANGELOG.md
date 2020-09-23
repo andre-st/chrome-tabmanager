@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 
 
+## [1.2.5] - 2020-09-23
+## Fixed
+- API changes, API bug (getLastFocused()) workaround for my Chromium version (Brave browser)
+
+
 ## [1.2.0] - 2018-02-20
 ### Added
 - Split highlighted tabs; use search to highlight tabs

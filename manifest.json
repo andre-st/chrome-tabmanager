@@ -3,8 +3,8 @@
 	
  	"name"        : "__MSG_extName__",
 	"short_name"  : "BazTabMan",
-	"version"     : "1.2.0",
-	"version_name": "Release 2018-02-20",
+	"version"     : "1.2.5",
+	"version_name": "1.2.5 (2020-09-23)",
 	"description" : "__MSG_extDescription__",
 	"author"      : "andre-st",
 	"homepage_url": "https://github.com/andre-st/chrome-tabmanager/blob/master/README.md",
