@@ -149,7 +149,7 @@ const nsTabMan =
 			? t => tabIndices.includes( t.index )
 			: t => t.index >= tabIndices[0];
 		
-		chrome.tabs.getAllInWindow( theWinid, function( tabs )
+		chrome.tabs.getAllInWindow( theWinId, function( tabs )
 		{
 			const firstTabId = tabs[tabIndices[0]].id;
 			const tabsToMove = tabs.filter( tabFilter ).map( t => t.id );
@@ -191,8 +191,8 @@ const nsTabMan =
 	 */
 	splitHighlighted: function()
 	{
-		chrome.tabs.query({ lastFocusedWindow: true, highlighted: true }, function( tabs )
-			tabs => nsTabMan._splitAtIndex( tabs[0].windowId, tabs.map( t => t.index ));
+		chrome.tabs.query({ lastFocusedWindow: true, highlighted: true },
+			tabs => nsTabMan._splitAtIndex( tabs[0].windowId, tabs.map( t => t.index )));
 		
 		nsTabMan._notifySplitSessionListeners( 'default');
 	},
@@ -236,14 +236,14 @@ const nsTabMan =
 	
 	/**
 	 * Conflates the given windows with their tabs into a single window.
-	 * @param  {number[]} theWinsIds - Array with window Ids
+	 * @param  {number[]} theWinIds - Array with window Ids
 	 * @return {void}
 	 * @private
 	 */
 	_merge: function( theWinIds )
 	{
 		const mvopt = { windowId: theWinIds[0], index: -1 };
-		theWinsIds.forEach(
+		theWinIds.forEach(
 			wid => chrome.tabs.query({ windowId: wid },
 				tabs => chrome.tabs.move( tabs.map( t => t.id ), mvopt )));
 	},
